@@ -42,7 +42,7 @@ class NameDaysUpdate extends Command
         $json = file_get_contents($url);
         $all_names = json_decode($json, true);
         if (!$all_names) {
-            throw new \Exception('name days was not found!');
+            throw new \Exception('name days source not found!');
         }
         $data = [];
         foreach($all_names as $month => $month_names) {
@@ -56,11 +56,11 @@ class NameDaysUpdate extends Command
             }
         }
         if (!$data) {
-            throw new \Exception('not name days found!');
+            throw new \Exception('name days not found!');
         }
         NameDays::truncate();
         if (!NameDays::insert($data)) {
-            throw new \Exception('name days was not inserted!');
+            throw new \Exception('name days not inserted!');
         }
         $this->comment('done');
         return 0;
